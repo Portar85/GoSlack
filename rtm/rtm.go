@@ -3,7 +3,6 @@ package rtm
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 	"sync/atomic"
 
@@ -75,16 +74,18 @@ func SendMessage(ws *websocket.Conn, m Message) error {
 	return websocket.JSON.Send(ws, m)
 }
 
-func Connect(token string) (*websocket.Conn, string) {
+func Connect(token string) (*websocket.Conn, string, error) {
 	wsURL, id, err := startRTM(token)
 	if err != nil {
-		log.Fatal(err)
+		err = fmt.Errorf("Connect API error: ", err)
+		return nil, "", err
 	}
 
 	ws, err := websocket.Dial(wsURL, "", "https://api.slack.com")
 	if err != nil {
-		log.Fatal(err)
+		err = fmt.Errorf("Websocket error: ", err)
+		return nil, "", err
 	}
 
-	return ws, id
+	return ws, id, nil
 }

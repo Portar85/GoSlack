@@ -3,7 +3,6 @@ package api
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 )
 
@@ -66,5 +65,5 @@ func GetUsers(token string) ([]Member, error) {
 		err = fmt.Errorf("User response not ok: ", response.Error)
 		return members, err
 	}
-	return response.Members
+	return response.Members, nil
 }
