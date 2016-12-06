@@ -22,6 +22,7 @@ type responseSelf struct {
 
 type Message struct {
 	Id      uint64 `json:"id"`
+	User    string `json:"user"`
 	Type    string `json:"type"`
 	Channel string `json:"channel"`
 	Text    string `json:"text"`
